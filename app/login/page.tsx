@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { Loader2, Eye, EyeOff } from "lucide-react";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -11,14 +11,12 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
 
   const handleLogin = () => {
     // ❌ validation
-    if (!email || !password) {
-      setError("Please enter email and password");
-      return;
-    }
+    
 
     // ✅ clear error & continue
     setError("");
@@ -50,12 +48,7 @@ export default function LoginPage() {
             </span>
           </div>
 
-          <Link
-            href="/signup"
-            className="rounded-full bg-white/60 px-6 py-2
-                       text-xs font-medium text-gray-700 hover:bg-white transition">
-            REGISTER
-          </Link>
+          
         </div>
 
         <h1 className="text-3xl font-semibold text-gray-900 mb-10">
@@ -77,17 +70,35 @@ export default function LoginPage() {
         </div>
 
         {/* PASSWORD */}
+          {/* PASSWORD WITH EYE TOGGLE */}
         <div className="mb-4">
           <label className="block text-sm text-gray-600 mb-2">Password</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter your password"
-            className="w-full rounded-xl border border-gray-300/60
-                       bg-white/60 px-4 py-4 text-sm
-                       focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
+
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter your password"
+              className="w-full rounded-xl border border-gray-300/60
+                         bg-white/60 px-4 py-4 pr-12 text-sm
+                         focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+
+            {/* 👁 Eye Toggle */}
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-4 top-1/2 -translate-y-1/2
+                         text-gray-500 hover:text-gray-800 transition"
+            >
+              {showPassword ? (
+                <EyeOff className="h-5 w-5" />
+              ) : (
+                <Eye className="h-5 w-5" />
+              )}
+            </button>
+          </div>
         </div>
 
         {/* ERROR MESSAGE */}
@@ -124,7 +135,7 @@ export default function LoginPage() {
                      rounded-xl border border-gray-300/60
                      bg-white/70 py-4 text-sm font-medium
                      text-gray-700 hover:bg-white transition">
-          <img src="/google.svg" className="h-5 w-5" alt="Google" />
+          <img src="/google.jpg" className="h-5 w-5" alt="Google" />
           Continue with Google
         </button>
 

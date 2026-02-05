@@ -2,12 +2,13 @@
 
 import { Search, User } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { usePathname } from "next/navigation";
 
 import { Button } from "@/app/components/ui/button";
 import { Input } from "@/app/components/ui/input";
 import { ThemeToggle } from "@/app/components/ThemeToggle";
+import Image from "next/image";
 
 type Props = {
   onUserClick: () => void;
@@ -16,6 +17,7 @@ type Props = {
 export function Navbar({ onUserClick }: Props) {
   const [showTopBar, setShowTopBar] = useState(true);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+  const [, startTransition] = useTransition();
   const pathname = usePathname();
   const searchRef = useRef<HTMLDivElement>(null);
 
@@ -25,7 +27,9 @@ export function Navbar({ onUserClick }: Props) {
   }, []);
 
   useEffect(() => {
-    setMobileSearchOpen(false);
+    startTransition(() => {
+      setMobileSearchOpen(false);
+    });
   }, [pathname]);
 
   useEffect(() => {
@@ -48,7 +52,6 @@ export function Navbar({ onUserClick }: Props) {
       className="
         sticky top-0 z-[100]
         backdrop-blur-xl
-<<<<<<< HEAD
         bg-gradient-to-r
         from-[#CF9893]/40
         via-[#F6EAEA]
@@ -62,24 +65,8 @@ export function Navbar({ onUserClick }: Props) {
       {/* subtle bottom glow line */}
       <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-[#CF9893] via-[#6968A6] to-[#085078]" />
 
-      {/* 🔹 TOP PROMO BAR */}
-=======
-
-        bg-gradient-to-r
-        from-[#CF9893]/30 via-white/70 to-[#6968A6]/30
-
-        dark:bg-gradient-to-r
-        dark:from-gray-900
-        dark:to-gray-900
-
-        border-b border-[#6968A6]/20
-        dark:border-white/15
-
-      
-      "
-    >
-      {/* TOP BAR */}
->>>>>>> 0e0815fd573b78c3bba424205cf5377e608744c4
+    {/* 🔹 TOP PROMO BAR */}
+    {/* TOP BAR */}
       <div
         className={`overflow-hidden transition-all duration-500 ${
           showTopBar ? "max-h-10" : "max-h-0"
@@ -90,16 +77,13 @@ export function Navbar({ onUserClick }: Props) {
         </div>
       </div>
 
-<<<<<<< HEAD
       {/* 🔹 MAIN NAVBAR */}
-=======
       {/* MAIN NAVBAR */}
->>>>>>> 0e0815fd573b78c3bba424205cf5377e608744c4
       <div className="h-14">
         <div className="max-w-7xl mx-auto h-full px-4 flex items-center gap-3">
           {/* LOGO */}
           <Link href="/" className="flex-shrink-0">
-            <img
+            <Image
               src="/bgnirmatri.png"
               alt="Nirmatri Logo"
               className="h-10 w-auto object-contain"
@@ -115,17 +99,14 @@ export function Navbar({ onUserClick }: Props) {
                 placeholder="Search handcrafted products..."
                 className="
                   w-full h-10 pl-5 pr-12 rounded-full
-<<<<<<< HEAD
                   bg-white
                   border border-[#6968A6]/30
-=======
                   bg-white/95
                   dark:bg-white/90
                   text-gray-900
                   placeholder:text-gray-500
                   border border-[#6968A6]/20
                   dark:border-white/30
->>>>>>> 0e0815fd573b78c3bba424205cf5377e608744c4
                   focus:ring-2 focus:ring-[#6968A6]/40
                 "
               />
@@ -162,17 +143,15 @@ export function Navbar({ onUserClick }: Props) {
               size="icon"
               onClick={onUserClick}
               className="
-<<<<<<< HEAD
+
                 rounded-full border border-[#6968A6]/40
                 hover:bg-gradient-to-br
                 hover:from-[#CF9893]/50
                 hover:to-[#6968A6]/50
-=======
                 rounded-full
                 border border-[#6968A6]/30
                 dark:border-white/40
                 hover:bg-white/20
->>>>>>> 0e0815fd573b78c3bba424205cf5377e608744c4
                 transition-all
               "
             >
@@ -182,11 +161,10 @@ export function Navbar({ onUserClick }: Props) {
         </div>
       </div>
 
-<<<<<<< HEAD
       {/* 🔹 MOBILE SEARCH */}
-=======
+
       {/* MOBILE SEARCH */}
->>>>>>> 0e0815fd573b78c3bba424205cf5377e608744c4
+
       <div
         ref={searchRef}
         className={`md:hidden overflow-hidden transition-all duration-300 ${
@@ -199,16 +177,12 @@ export function Navbar({ onUserClick }: Props) {
             name="q"
             type="search"
             placeholder="Search products..."
-<<<<<<< HEAD
-            className="flex-1 h-11 rounded-full border border-[#6968A6]/30"
-=======
             className="
               flex-1 h-11 rounded-full
               bg-white/95
               border border-white/30
               text-gray-900
             "
->>>>>>> 0e0815fd573b78c3bba424205cf5377e608744c4
           />
           <Button
             size="icon"

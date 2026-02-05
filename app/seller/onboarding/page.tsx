@@ -21,7 +21,6 @@ export default function SellerOnboardingPage() {
 
   // Form data state for all steps
   const [formData, setFormData] = useState({
-   
 
     // Store Info
     ownername: "",
@@ -52,7 +51,7 @@ export default function SellerOnboardingPage() {
   // ============================================
   // FORM UPDATE HANDLER
   // ============================================
-  const updateFormData = (field: string, value: any) => {
+  const updateFormData = (field: string, value: string | string[] | File | null | boolean) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -87,41 +86,6 @@ export default function SellerOnboardingPage() {
       <div className="w-full max-w-4xl bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-6 md:p-8 transition-colors duration-200">
         {/* ============================================ */}
         {/* 🔹 STEPPER HEADER */}
-<<<<<<< HEAD
-        <div className="flex items-center justify-between mb-10">
-          {steps.map((step, index) => (
-            <div key={step} className="flex-1 flex items-center">
-              <div
-                className={`h-9 w-9 rounded-full flex items-center justify-center text-sm font-medium
-                ${
-                  index <= currentStep
-                    ? "bg-blue-600 text-white"
-                    : "bg-gray-200 text-gray-500"
-                }`}
-              >
-                {index + 1}
-              </div>
-
-              <span
-                className={`ml-3 text-sm font-medium hidden sm:block
-                ${
-                  index <= currentStep
-                    ? "text-gray-900"
-                    : "text-gray-400"
-                }`}
-              >
-                {step}
-              </span>
-
-              {index !== steps.length - 1 && (
-                <div className="flex-1 h-[2px] mx-4 bg-gray-200">
-                  <div className="h-full bg-blue-600 transition-all"
-                    style={{
-                      width: index < currentStep ? "100%" : "0%",
-                    }}
-                  />
-=======
-        {/* ============================================ */}
         <div className="mb-8 md:mb-10">
           {/* Stepper Progress */}
           <div className="flex items-center justify-between mb-4">
@@ -139,7 +103,6 @@ export default function SellerOnboardingPage() {
                   }`}
                 >
                   {index < currentStep ? "✓" : index + 1}
->>>>>>> 0e0815fd573b78c3bba424205cf5377e608744c4
                 </div>
 
                 {/* Step Label (hidden on small screens) */}
@@ -257,10 +220,31 @@ export default function SellerOnboardingPage() {
 /* ============================================ */
 
 // ============================================
-
 // STEP 1: STORE INFORMATION
 // ============================================
-function StoreInfo({ formData, updateFormData }: any) {
+interface FormDataProps {
+  formData: {
+    ownername?: string;
+    ownerName?: string;
+    storeName: string;
+    storeCategory: string[];
+    panNumber: string;
+    aadhaarNumber: string;
+    panDocument: File | null;
+    aadhaarDocument: File | null;
+    accountHolderName: string;
+    accountNumber: string;
+    ifscCode: string;
+    bankName: string;
+    phoneNumber: string;
+    otp: string;
+    isOtpSent: boolean;
+    isOtpVerified: boolean;
+  };
+  updateFormData: (field: string, value: string | string[] | File | null | boolean) => void;
+}
+
+function StoreInfo({ formData, updateFormData }: FormDataProps) {
   const categories = [
     "Home Decor",
     "Kitchenware",
@@ -416,7 +400,7 @@ function StoreInfo({ formData, updateFormData }: any) {
 // ============================================
 // STEP 2: KYC DETAILS
 // ============================================
-function KYC({ formData, updateFormData }: any) {
+function KYC({ formData, updateFormData }: FormDataProps) {
   const handleFileUpload = (field: string, file: File | null) => {
     updateFormData(field, file);
   };
@@ -501,7 +485,7 @@ function KYC({ formData, updateFormData }: any) {
 // ============================================
 // STEP 3: BANK DETAILS
 // ============================================
-function Bank({ formData, updateFormData }: any) {
+function Bank({ formData, updateFormData }: FormDataProps) {
   return (
     <div className="space-y-5">
       {/* Header */}
@@ -563,7 +547,7 @@ function Bank({ formData, updateFormData }: any) {
           className="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-4 py-3 text-gray-900 dark:text-white bg-white dark:bg-gray-700 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors uppercase"
         />
         <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-          Enter your bank's 11-character IFSC code
+          Enter your banks 11-character IFSC code
         </p>
       </div>
 
@@ -597,7 +581,7 @@ function Bank({ formData, updateFormData }: any) {
 }
  // STEP 4: PHONE VERIFICATION (OTP)
 // ============================================
-function PhoneVerification({ formData, updateFormData }: any) {
+function PhoneVerification({ formData, updateFormData }: FormDataProps) {
   const [timer, setTimer] = useState(0);
 
   // OTP timer countdown
@@ -635,7 +619,7 @@ function PhoneVerification({ formData, updateFormData }: any) {
           Phone Verification
         </h2>
         <p className="text-gray-600 dark:text-gray-400">
-          We'll send you a verification code to confirm your number
+          We will send you a verification code to confirm your number
         </p>
       </div>
 
@@ -690,6 +674,7 @@ function PhoneVerification({ formData, updateFormData }: any) {
                 updateFormData("otp", value);
               }}
               placeholder="123456"
+              title="Enter the 6-digit OTP sent to your mobile number"
               maxLength={6}
               className="flex-1 px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white bg-white dark:bg-gray-700 placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors text-center text-lg tracking-widest font-mono"
             />
@@ -736,11 +721,11 @@ function PhoneVerification({ formData, updateFormData }: any) {
       </div>
     </div>
   );
-}
+} 
 // ============================================
 // STEP 5: REVIEW & SUBMIT
 // ============================================
-function Review({ formData }: any) {
+function Review({ formData }: Pick<FormDataProps, 'formData'>) {
   const sections = [
     {
       title: "Phone Verification",
@@ -752,7 +737,7 @@ function Review({ formData }: any) {
     {
       title: "Store Information",
       items: [
-         { label: "Owner Name", value: formData.ownerName || "Not provided" },
+        { label: "Owner Name", value: formData.ownerName || "Not provided" },
         { label: "Store Name", value: formData.storeName || "Not provided" },
         { label: "Categories", value: formData.storeCategory && formData.storeCategory.length > 0 
         ? formData.storeCategory.join(", ") 
@@ -852,7 +837,7 @@ function Review({ formData }: any) {
         </p>
         <ul className="text-sm text-blue-800 dark:text-blue-300 space-y-1 list-disc list-inside">
           <li>Your application will be reviewed within 24-48 hours</li>
-          <li>You'll receive an email confirmation once approved</li>
+          <li>You will receive an email confirmation once approved</li>
           <li>You can then start adding products and receiving orders</li>
         </ul>
       </div>
@@ -865,7 +850,14 @@ function Review({ formData }: any) {
 /* ============================================ */
 
 // File Upload Component
-function FileUpload({ label, file, onChange, description }: any) {
+interface FileUploadProps {
+  label: string;
+  file: File | null;
+  onChange: (file: File | null) => void;
+  description: string;
+}
+
+function FileUpload({ label, file, onChange, description }: FileUploadProps) {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = e.target.files?.[0] || null;
     if (selectedFile) {

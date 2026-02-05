@@ -35,7 +35,7 @@ export default function LoginPage() {
     setError("");
     setLoading(true);
 
-    // 🔁 Fake API (backend later)
+  
     setTimeout(() => {
       setLoading(false);
       router.push("/home");

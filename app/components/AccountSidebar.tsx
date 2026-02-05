@@ -132,11 +132,12 @@ export default function AccountSidebar({
           <div className="mt-6 space-y-1">
             <MenuItem icon={<User />} label="My Profile" onClick={() => onSelect?.("profile")} />
             <MenuItem icon={<ShoppingBag />} label="My Orders" onClick={() => onSelect?.("orders")} />
-            <MenuItem icon={<MapPin />} label="Saved Addresses" onClick={() => onSelect?.("addresses")} />
+            
             <MenuItem icon={<Heart />} label="Wishlist" onClick={() => onSelect?.("wishlist")} />
             <MenuItem icon={<ShoppingCart />} label="Cart" onClick={() => onSelect?.("cart")} />
             <MenuItem icon={<CreditCard />} label="Payments" onClick={() => onSelect?.("payments")} />
             <MenuItem icon={<RefreshCcw />} label="Returns & Refunds" onClick={() => onSelect?.("returns")} />
+            <MenuItem icon={<MapPin />} label="Setting" onClick={() => onSelect?.("addresses")} />
           </div>
 
           {/* ================= LOGOUT ================= */}

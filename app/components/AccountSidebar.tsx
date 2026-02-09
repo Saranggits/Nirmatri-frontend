@@ -5,14 +5,13 @@ import { useRouter } from "next/navigation";
 import {
   User,
   ShoppingBag,
-
   Heart,
   ShoppingCart,
   CreditCard,
   RefreshCcw,
   LogOut,
   ChevronRight,
-
+  MapPin,
 } from "lucide-react";
 
 /* ===================== TYPES ===================== */
@@ -49,24 +48,13 @@ export default function AccountSidebar({
       {/* ================= SIDEBAR ================= */}
       <aside
         className={clsx(
-          /* 📱 Mobile: full screen */
           "fixed inset-0 z-[70]",
-
-          /* 💻 Desktop: navbar ke niche right side */
           "lg:inset-auto lg:right-0 lg:top-14 lg:bottom-0",
-
-          /* Width control */
           "w-full lg:w-[330px]",
-
-          /* Base styles */
           "bg-white dark:bg-gray-900",
           "border-l border-gray-200 dark:border-gray-800",
           "shadow-[0_0_40px_rgba(0,0,0,0.18)]",
-
-          /* Animation */
           "transition-transform duration-300 ease-out",
-
-          /* Open / Close */
           open ? "translate-x-0" : "translate-x-full"
         )}
       >
@@ -83,17 +71,16 @@ export default function AccountSidebar({
           </h2>
 
           <button
-  onClick={onClose}
-  aria-label="Close modal"
-  className="
-    rounded-full p-2
-    hover:bg-gray-100 dark:hover:bg-gray-800
-    transition
-  "
->
-  ✕
-</button>
-
+            onClick={onClose}
+            aria-label="Close sidebar"
+            className="
+              rounded-full p-2
+              hover:bg-gray-100 dark:hover:bg-gray-800
+              transition
+            "
+          >
+            ✕
+          </button>
         </div>
 
         {/* ================= CONTENT ================= */}
@@ -134,22 +121,19 @@ export default function AccountSidebar({
           <div className="mt-6 space-y-1">
             <MenuItem icon={<User />} label="My Profile" onClick={() => onSelect?.("profile")} />
             <MenuItem icon={<ShoppingBag />} label="My Orders" onClick={() => onSelect?.("orders")} />
-            
-=======
-
             <MenuItem icon={<Heart />} label="Wishlist" onClick={() => onSelect?.("wishlist")} />
             <MenuItem icon={<ShoppingCart />} label="Cart" onClick={() => onSelect?.("cart")} />
             <MenuItem icon={<CreditCard />} label="Payments" onClick={() => onSelect?.("payments")} />
             <MenuItem icon={<RefreshCcw />} label="Returns & Refunds" onClick={() => onSelect?.("returns")} />
-            <MenuItem icon={<MapPin />} label="Setting" onClick={() => onSelect?.("addresses")} />
+            <MenuItem icon={<MapPin />} label="Addresses" onClick={() => onSelect?.("addresses")} />
           </div>
 
           {/* ================= LOGOUT ================= */}
           <div className="mt-6 pt-4 border-t border-gray-200 dark:border-gray-800">
             <button
               onClick={() => {
-                onClose();          // Sidebar band
-                router.push("/");  // ✅ localhost:3000
+                onClose();
+                router.push("/");
               }}
               className="
                 w-full flex items-center gap-3

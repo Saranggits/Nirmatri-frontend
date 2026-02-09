@@ -87,6 +87,8 @@ export function Navbar({ onUserClick }: Props) {
               src="/bgnirmatri.png"
               alt="Nirmatri Logo"
               className="h-10 w-auto object-contain"
+              width={120}
+              height={40}
             />
           </Link>
 

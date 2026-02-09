@@ -53,6 +53,7 @@ export default function HeaderWrapper() {
       case "returns": return <ReturnsSection />;
       case "notifications": return <NotificationsSection />;
       case "support": return <SupportSection />;
+      
       default: return <MyProfileSection />;
     }
   };

@@ -1,11 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Navbar } from "@/app/components/Navbar";
-import AccountSidebar from "@/app/components/AccountSidebar";
-import LeftPanel from "@/app/components/LeftPanel";
+import { Header } from "@/app/components/Header";
+import dynamic from "next/dynamic";
 
-/* SECTIONS */
+const AccountSidebar = dynamic(
+  () => import("@/app/components/AccountSidebar"),
+  { ssr: false }
+);
+
+const LeftPanel = dynamic(
+  () => import("@/app/components/LeftPanel"),
+  { ssr: false }
+);
+
+
+/* ===================== SECTIONS ===================== */
 import { MyProfileSection } from "@/app/components/userprofile/sections/MyProfileSection";
 import { OrdersSection } from "@/app/components/userprofile/sections/OrdersSection";
 import { AddressesSection } from "@/app/components/userprofile/sections/AddressesSection";
@@ -17,7 +27,8 @@ import { NotificationsSection } from "@/app/components/userprofile/sections/Noti
 import { SupportSection } from "@/app/components/userprofile/sections/SupportSection";
 // import SettingsSection  from "@/app/components/userprofile/sections/SettingsSection";
 
-type Section =
+/* ===================== TYPES ===================== */
+export type Section =
   | "profile"
   | "orders"
   | "addresses"
@@ -29,9 +40,10 @@ type Section =
   | "settings"
   | "support";
 
+/* ===================== COMPONENT ===================== */
 export default function HeaderWrapper() {
-  const [menuOpen, setMenuOpen] = useState(false);   // Sidebar
-  const [panelOpen, setPanelOpen] = useState(false); // Panel
+  const [menuOpen, setMenuOpen] = useState(false);   // Sidebar open
+  const [panelOpen, setPanelOpen] = useState(false); // Right panel open
   const [section, setSection] = useState<Section>("profile");
 
   /* 🔒 BODY SCROLL LOCK */
@@ -44,7 +56,7 @@ export default function HeaderWrapper() {
     };
   }, [menuOpen, panelOpen]);
 
-  /* 🔹 SECTION RENDER */
+  /* ===================== SECTION RENDER ===================== */
   const renderSection = () => {
     switch (section) {
       case "orders": return <OrdersSection />;
@@ -64,29 +76,29 @@ export default function HeaderWrapper() {
 
   return (
     <>
-      {/* ✅ USER ICON = TOGGLE SIDEBAR */}
-      <Navbar onUserClick={() => setMenuOpen((prev) => !prev)} />
+      {/* ================= HEADER ================= */}
+      <Header onUserClick={() => setMenuOpen((prev) => !prev)} />
 
-      {/* SIDEBAR */}
+      {/* ================= SIDEBAR ================= */}
       <AccountSidebar
         open={menuOpen}
         onClose={() => {
           setMenuOpen(false);
-          setPanelOpen(false); // ❗ only manual close pe panel band
+          setPanelOpen(false);
         }}
         onSelect={(sec) => {
-          setSection(sec as Section);
-          setPanelOpen(true);
+  setSection(sec);        // ✅ ab error nahi
+  setPanelOpen(true);
 
-          // 📱 MOBILE pe sidebar band
+
+          // 📱 Mobile → sidebar close
           if (isMobile()) {
             setMenuOpen(false);
           }
-          // 💻 DESKTOP pe sidebar open rahega
         }}
       />
 
-      {/* LEFT PANEL */}
+      {/* ================= RIGHT PANEL ================= */}
       <LeftPanel
         open={panelOpen}
         onClose={() => setPanelOpen(false)}
